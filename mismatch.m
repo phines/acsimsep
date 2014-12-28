@@ -110,7 +110,6 @@ if nargout>1
     dg_dx = dg_dx + sparse(rows+nBus,cols+(nBus-1),values,nx,nx);
     % dP_drho
     dg_dx = dg_dx + sparse(dP_rows(ramp_gen),ix.rho,-PartFact(ramp_gen),nx,nx);
-    
     if zipe_loads
         % fix the derivatives with ZIP[E] contributions
         dP_E_dVmag = Sd(:,5).*real(Sd(:,4)).*Vmag.^(Sd(:,5)-1);

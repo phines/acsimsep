@@ -1,7 +1,12 @@
 %% Load the data
 C = psconstants;
 addpath('./data');
-ps = case6ww_ps;
+load_factor = 1;
+ps = case2_ps;
+% ps = case6ww_ps;
+ps.shunt(:,C.sh.P) = ps.shunt(:,C.sh.P) * load_factor;
+ps.shunt(:,C.sh.Q) = ps.shunt(:,C.sh.Q) * load_factor;
+
 ps = updateps(ps);
 % Extract stuff from ps
 n = size(ps.bus,1);
@@ -39,7 +44,6 @@ x(ix.rho)   = 0;
 if any(x(ix.Vmag))==0
     x(ix.Vmag) = 1;
 end
-
 %% Solve
 opts = numerics_options;
 opts.nr.verbose=true;

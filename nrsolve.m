@@ -118,6 +118,10 @@ function [x,alpha,g] = linesearch(p,x_prev,eval_g,opts)
 f_prev = qnorm(feval(eval_g,x_prev));
 % choose the method
 switch opts.nr.linesearch
+    case 'none'
+        alpha = 1;
+        x = x_prev + alpha*p;
+        g = feval(eval_g,x);
     case 'backtrack'
         alpha = 1;
         alpha_min = opts.nr.alpha_min;
