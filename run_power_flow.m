@@ -25,7 +25,7 @@ Sg_bus = full(sparse(G,1,Sg,n,1));
 pq  = ps.bus(:,C.bu.type)==C.PQ;
 ref = ps.bus(:,C.bu.type)==C.REF;
 pv  = false(n,1);
-part_fact = ps.bus(:,C.bu.type)==C.PV;
+part_fact = (ps.bus(:,C.bu.type)==C.PV | ps.bus(:,C.bu.type)==C.REF);
 
 %% build the decision vector
 npq = sum(pq);

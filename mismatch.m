@@ -15,7 +15,11 @@ j = 1i;
  
 nBus = size(Ybus,1);
 if nargin<9
-    PartFact = ones(nBus,1);
+    PartFact = zeros(nBus,1);
+    PartFact(ref) = 1;
+end
+if all(PartFact==0)
+    error('No ramping generators provided');
 end
 % convert pv/pq to logical arrays
 if length(pv)<nBus
