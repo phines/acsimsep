@@ -62,7 +62,7 @@ else
         disp('Iter   Max(|g|)   |g|_2      |J.''*g|      alpha     det(J)');
     end
     
-    for k = 1:max_iters
+    for k = 0:max_iters
         % evaluate the function and the derivative
         [g,J] = feval(eval_g,x);
         
@@ -72,6 +72,17 @@ else
         Jg = J.'*g;
         mean_Jg = mean(Jg);
         mean_g2 = mean(g.^2);
+        % print something
+        if verbose
+            dJ =  det(J);
+            if k==0
+                fprintf('%4d %10.7f %10.7f %10.7f     ----   %10.7e\n', ...
+                    k, full(max_mismatch), full(mean_g2), full(mean_Jg), dJ);
+            else
+                fprintf('%4d %10.7f %10.7f %10.7f %10.7f %10.7e\n', ...
+                    k, full(max_mismatch), full(mean_g2), full(mean_Jg), alpha, dJ);
+            end
+        end
         
         % check for convergence
         if max_mismatch<tolerance %checks if max is is greater than tolerance
@@ -98,20 +109,17 @@ else
         x_old = x;
         
         % do some sort of line search to select the step size and the new x
-        [x,alpha,g_new] = linesearch(p,x,eval_g,opts);
-        if mean(g_new.^2)>mean_g2
-            error('Bad choice of alpha');
-        end
-        % print something
-        if verbose
-            dJ =  det(J);
-            fprintf('%4d %10.7f %10.7f %10.7f %10.7f %10.7e\n', ...
-                k, full(max_mismatch), full(mean_g2), full(mean_Jg), alpha, dJ);
+        [x,alpha,~,flag] = linesearch(p,x,eval_g,opts);
+        if ~flag
+            if verbose
+                fprintf(' Could not find a step size that decreased the mismatch\n');
+            end
+            break;
         end
         % produce a plot to help think about alpha
-        if 1
+        if 0
             alpha_range = -1:0.01:2;
-            q_norm = zeros(size(alpha_range));
+            g_norm = zeros(size(alpha_range));
             for ai = 1:length(alpha_range)
                 x_new = x_old + alpha_range(ai)*p;
                 g_new = feval(eval_g,x_new);
@@ -135,8 +143,12 @@ end
 
 return;
 
-function [x,alpha,g] = linesearch(p,x_prev,eval_g,opts)
+function [x,alpha,g,exitflag] = linesearch(p,x_prev,eval_g,opts)
 % perform a line search to choose a step size
+% usage: [x,alpha,g,exitflag] = linesearch(p,x_prev,eval_g,opts)
+%  exitflag of 1 means that we got a valid output
+
+exitflag = 1;
 
 % get the starting point
 f_prev = qnorm(feval(eval_g,x_prev));
@@ -159,15 +171,15 @@ switch opts.nr.linesearch
                 break
             end
             alpha = alpha / 2;
-            if 0
-                a = -1:.01:1;
-                for i = 1:length(a)
-                    fi(i) = qnorm(feval(eval_g,x_prev + a(i)*p));
-                end
-                figure(1);
-                plot(a,fi);
-                pause
-            end
+%             if 0
+%                 a = -1:.01:1;
+%                 for i = 1:length(a)
+%                     fi(i) = qnorm(feval(eval_g,x_prev + a(i)*p));
+%                 end
+%                 figure(1);
+%                 plot(a,fi);
+%                 pause
+%             end
         end
     case 'exact'
         f_mis = @(a) qnorm(feval(eval_g,x_prev + a*p));
@@ -180,10 +192,8 @@ switch opts.nr.linesearch
         g = feval(eval_g,x);
         if f_prev < qnorm(g)
             [alpha,~,flag] = fminbnd(f_mis,0,0.1);
-            x = x_prev + alpha*p;
-            g = feval(eval_g,x);
-            if f_prev < qnorm(g)
-                error('Decrease not found');
+            if flag~=1
+                error('Could not find a minimizing alpha');
             end
         end
         
@@ -217,6 +227,13 @@ switch opts.nr.linesearch
     otherwise
         error('unsupported line search method');
 end
+
+x = x_prev + alpha*p;
+g = feval(eval_g,x);
+if f_prev < qnorm(g)
+    exitflag = 0;
+end
+
 
 function f = qnorm(x)
 % simple quadratic norm:
