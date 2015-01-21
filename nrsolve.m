@@ -59,7 +59,7 @@ if use_fsolve
 else
     % print something
     if verbose
-        disp('Iter   Max(|g|)   |g|_2      |J*g|      alpha');
+        disp('Iter   Max(|g|)   |g|_2      |J.''*g|      alpha');
     end
     
     for k = 0:max_iters
@@ -69,7 +69,7 @@ else
         % do some calculations to check for convergence:
         max_mismatch = max(abs(g)); % inf norm
         % check first order optimality condition
-        Jg = J*g;
+        Jg = J.'*g;
         mean_Jg = mean(Jg);
         mean_g2 = mean(g.^2);
         

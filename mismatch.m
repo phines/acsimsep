@@ -60,7 +60,7 @@ rho         = x(ix.rho);
 % calculate the voltage
 V = Vmag.*exp(j*theta);
 % make adjustments to Sg for gen ramping
-ramp_gen        = ~pv & ~pq;
+ramp_gen        = ref | pv;
 % calculate the total load according to ZIPE matrix
 zipe_cols       = size(Sd,2);
 if zipe_cols==1
@@ -114,6 +114,7 @@ if nargout>1
     dg_dx = dg_dx + sparse(rows+nBus,cols+(nBus-1),values,nx,nx);
     % dP_drho
     dg_dx = dg_dx + sparse(dP_rows(ramp_gen),ix.rho,-PartFact(ramp_gen),nx,nx);
+%     det(dg_dx(2:end,1:end-1))
     if zipe_loads
         % fix the derivatives with ZIP[E] contributions
         dP_E_dVmag = Sd(:,5).*real(Sd(:,4)).*Vmag.^(Sd(:,5)-1);
