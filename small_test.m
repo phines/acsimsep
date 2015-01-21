@@ -1,9 +1,10 @@
 %% Load the data
 C = psconstants;
 addpath('./data');
-load_factor = 4;
+load_factor = 1.5;
 %ps = case2_ps; 
-ps = case6ww_ps;
+%ps = case6ww_ps;
+ps = case39_ps;
 ps.shunt(:,C.sh.P) = ps.shunt(:,C.sh.P) * load_factor;
 ps.shunt(:,C.sh.Q) = ps.shunt(:,C.sh.Q) * load_factor;
 
@@ -47,7 +48,7 @@ end
 %% Solve
 opts = numerics_options;
 opts.nr.linesearch = 'exact';
-opts.nr.max_iterations = 1000;
+opts.nr.max_iterations = 100;
 opts.nr.verbose=true;
 % set up a virtual function to solve
 g = @(newx)mismatch(newx,Ybus,Vmag,Sg_bus,Sd_bus,pq,pv,ref,part_fact);

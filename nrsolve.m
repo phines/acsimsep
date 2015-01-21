@@ -59,10 +59,10 @@ if use_fsolve
 else
     % print something
     if verbose
-        disp('Iter   Max(|g|)   |g|_2      |J.''*g|      alpha');
+        disp('Iter   Max(|g|)   |g|_2      |J.''*g|      alpha     det(J)');
     end
     
-    for k = 0:max_iters
+    for k = 1:max_iters
         % evaluate the function and the derivative
         [g,J] = feval(eval_g,x);
         
@@ -73,11 +73,6 @@ else
         mean_Jg = mean(Jg);
         mean_g2 = mean(g.^2);
         
-        % print something
-        if verbose
-            fprintf('%4d %10.7f %10.7f %10.7f %g\n', ...
-                k, full(max_mismatch), full(mean_g2), full(mean_Jg), alpha);
-        end
         % check for convergence
         if max_mismatch<tolerance %checks if max is is greater than tolerance
             exitflag = 1;
@@ -97,8 +92,37 @@ else
 %         end
         % choose the search direction
         p = -(J\g);
+        %keyboard
+        
+        % save x for the plot below with different alpha's
+        x_old = x;
+        
         % do some sort of line search to select the step size and the new x
-        [x,alpha] = linesearch(p,x,eval_g,opts);
+        [x,alpha,g_new] = linesearch(p,x,eval_g,opts);
+        if mean(g_new.^2)>mean_g2
+            error('Bad choice of alpha');
+        end
+        % print something
+        if verbose
+            dJ =  det(J);
+            fprintf('%4d %10.7f %10.7f %10.7f %10.7f %10.7e\n', ...
+                k, full(max_mismatch), full(mean_g2), full(mean_Jg), alpha, dJ);
+        end
+        % produce a plot to help think about alpha
+        if 1
+            alpha_range = -1:0.01:2;
+            q_norm = zeros(size(alpha_range));
+            for ai = 1:length(alpha_range)
+                x_new = x_old + alpha_range(ai)*p;
+                g_new = feval(eval_g,x_new);
+                g_norm(ai) = mean(g_new.^2);
+            end
+            figure(1); clf
+            plot(alpha_range,g_norm);
+            xlabel('Alpha');
+            ylabel('g-norm');
+            pause;
+        end
         if alpha < 1e-12
             break
         end
@@ -147,12 +171,21 @@ switch opts.nr.linesearch
         end
     case 'exact'
         f_mis = @(a) qnorm(feval(eval_g,x_prev + a*p));
-        [alpha,~,flag] = fminunc(f_mis,1,optimset('Display','off','LargeScale','off'));
+        %[alpha,~,flag] = fminunc(f_mis,1,optimset('Display','off','LargeScale','off'));
+        [alpha,~,flag] = fminbnd(f_mis,0,2);
         if flag==0
             alpha = 0;
         end
         x = x_prev + alpha*p;
         g = feval(eval_g,x);
+        if f_prev < qnorm(g)
+            [alpha,~,flag] = fminbnd(f_mis,0,0.1);
+            x = x_prev + alpha*p;
+            g = feval(eval_g,x);
+            if f_prev < qnorm(g)
+                error('Decrease not found');
+            end
+        end
         
     case 'cubic_spline'
         alpha = 1;
