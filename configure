@@ -1,0 +1,29 @@
+#! /usr/bin/perl
+# Mostly just here to configure all of the required subprojects
+##  by Paul Hines
+
+use File::Copy;
+use Cwd;
+
+# variables
+my $blaslink = undef;
+my $wdir = cwd;
+my $prefix = $wdir; # defaults to the current working directory
+
+# process the inputs
+foreach (@ARGV) {
+	$blaslink=$1 if m/--with-blas=\"?(.+)\"?/;
+	$prefix=$1   if m/--prefix=\"?(.+)\"?/;
+}
+
+# now configure the src/ directory
+chdir "src/";
+my $command = "./configure";
+$command .= "--prefix=$prefix" if defined $prefix;
+$command .= "--with-blas=$blaslink" if defined $blaslink;
+# now run the command
+system("$command")==0 or die;
+# and go back to the original directory
+chdir $wdir;
+
+exit 0;

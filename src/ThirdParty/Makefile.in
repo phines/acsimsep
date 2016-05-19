@@ -1,0 +1,20 @@
+## a simple makefile template for the ThirdParty directory
+PREFIX = 
+
+default: all
+
+all: suitesparse bonmin
+
+sparsesuite: SuiteSparse/Makefile
+	make -C SuiteSparse
+
+bonmin: Coin-Bonmin/Makefile
+	make -C Coin-Bonmin
+
+install: suitesparse bonmin
+	make -C Coin-Bonmin install
+	make -C SuiteSparse install
+
+clean:
+	make -C Coin-Bonmin clean
+	make -C SuiteSparse clean
