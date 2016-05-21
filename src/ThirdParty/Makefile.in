@@ -3,15 +3,15 @@ PREFIX =
 
 default: all
 
-all: suitesparse bonmin
+all: SuiteSparse Coin-Bonmin
 
-sparsesuite: SuiteSparse/Makefile
+SuiteSparse:
 	make -C SuiteSparse
 
-bonmin: Coin-Bonmin/Makefile
+Coin-Bonmin:
 	make -C Coin-Bonmin
 
-install: suitesparse bonmin
+install: SuiteSparse Coin-Bonmin
 	make -C Coin-Bonmin install
 	make -C SuiteSparse install
 

@@ -1,31 +1,39 @@
 #! /usr/bin/perl
+# A very simple configure script for the acsimsep/src/ThirdParty directory
 ##  by Paul Hines
 
 use File::Copy;
 use Cwd;
 
 # variables
+my $wdir = cwd;
 my $default_blaslink=undef;
 my $blaslink=undef;
-my $prefix=cwd; # defaults to the current working directory
-#$prefix =~ s/ThirdParty//;
+my $prefix=$wdir; # defaults to the current working directory
 my $count=0;
-
-# print a quick header
-print "\nAttempting to configure the ThirdParty code.\n";
+my $SuiteSparse = `ls SuiteSparse*.tar.gz`;
 
 # process the inputs
 foreach (@ARGV) {
 	$blaslink=$1 if m/--with-blas=\"?(.+)\"?/;
 	$prefix=$1   if m/--prefix=\"?(.+)\"?/;
 }
-unless ($blaslink) {
-	print "Enter the link string for your blas library [$default_blaslink] > ";
-	$blaslink = <STDIN>;
-	chomp($blaslink);
-	$blaslink = $default_blaslink unless $blaslink=~/\w/;
+
+# print a quick header
+print "Attempting to configure the ThirdParty code.\n";
+
+# check to see that things are downloaded
+unless (-d "Coin-Bonmin/") {
+	system("./download");
 }
-print "Using \"$blaslink\" to link to blas.\n";
+
+# unless ($blaslink) {
+# 	print "Enter the link string for your blas library [$default_blaslink] > ";
+# 	$blaslink = <STDIN>;
+# 	chomp($blaslink);
+# 	$blaslink = $default_blaslink unless $blaslink=~/\w/;
+# }
+#print "Using \"$blaslink\" to link to blas.\n";
 print "Using \"$prefix\" as the installation directory.\n";
 
 ## if the Coin-Bonmin directory already exists, check to see if the user wants to reconfigure (time consuming)
@@ -60,29 +68,26 @@ if ($reconfigure=~m/y/i) {
 	# system("./configure && make && make install")==0 or die "It looks like lapack files have not been downloaded yet.\n";
 
 	# configure the main Coin-Bonmin package
-	chdir "$prefix/ThirdParty/Coin-Bonmin";
-	if (defined $blaslink) {
-		system("./configure -C --prefix=$prefix --with-blas=\"$blaslink\"")==0 or die "Could not configure Coin-Bonmin";
-	} else {
-		system("./configure -C --prefix=$prefix")==0 or die "Could not configure Coin-Bonmin";
-	}
+	print "Configuring Coin-Bonmin\n";
+	chdir "Coin-Bonmin" or die;
+	my $command = "./configure ";
+	$command .= "--prefix=\"$prefix\" " if defined $prefix;
+	$command .= "--with-blas=\"$blaslink\" " if defined $blaslink;
+	print "$command\n";
+	system("$command")==0 or die;
+	
 }
 # configure SuiteSparse
-# print "Configuring SuiteSparse files.\n";
-# chdir "$prefix/ThirdParty/SuiteSparse";
-# if (defined $blaslink) {
-# 	system("./configure --with-blas=\"$blaslink\" --prefix=\"$prefix\"")==0 or die "Could not configure SuiteSparse";
-# } else {
-# 	system("./configure --prefix=\"$prefix\"")==0 or die "Could not configure SuiteSparse";
-# }
-# chdir "..";
+unless (-d "SuiteSparse") {
+	system("tar xvfz $SuiteSparse");		
+}
 
 # write the make file
 # add the prefix variable to the Makefile
-print "Writing the makefile for the ThirdParty directory\n";
-open(INFILE, "<Makefile.in");
-open(OUTFILE, ">Makefile");
-print OUTFILE "\#\# This makefile was auto-generated from Makefile.in";
+print "Writing the makefile for the ThirdParty/ directory\n";
+open(INFILE, "<Makefile.in") or die;
+open(OUTFILE, ">Makefile") or die;
+print OUTFILE "\#\# This makefile was auto-generated from Makefile.in\n";
 while ($line=<INFILE>) {
 	# substitute the prefix line:
 	$line =~ s/PREFIX\s*=.*/PREFIX = $prefix/;
@@ -91,5 +96,6 @@ while ($line=<INFILE>) {
 }
 
 # return to the original directory and exit
-chdir "$prefix/ThirdParty";
+chdir "$wdir" or die;
+print "Successfully configured ThirdParty/\n";
 exit 0;

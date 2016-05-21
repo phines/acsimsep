@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-# Mostly just here to configure all of the required subprojects
+# A very simple configure script for the acsimsep directory
 ##  by Paul Hines
 
 use File::Copy;
@@ -18,12 +18,28 @@ foreach (@ARGV) {
 
 # now configure the src/ directory
 chdir "src/";
-my $command = "./configure";
-$command .= "--prefix=$prefix" if defined $prefix;
-$command .= "--with-blas=$blaslink" if defined $blaslink;
+print "Configuring the src/ directory.\n";
+my $command = "./configure ";
+$command .= "--prefix=\"$prefix\" " if defined $prefix;
+$command .= "--with-blas=\"$blaslink\" " if defined $blaslink;
+print "$command\n";
 # now run the command
 system("$command")==0 or die;
 # and go back to the original directory
-chdir $wdir;
+chdir $wdir or die;
 
+# write the Makefile
+print "Writing the makefile for the acsimsep/ directory.\n";
+open(INFILE, "<Makefile.in") or die;
+open(OUTFILE, ">Makefile") or die;
+print OUTFILE "\#\# This makefile was auto-generated from Makefile.in\n";
+while ($line=<INFILE>) {
+	# substitute the prefix line:
+	$line =~ s/PREFIX\s*=.*/PREFIX = $prefix/;
+	# print the line to the makefile
+	print OUTFILE $line;
+}
+
+print "Successfully configured acsimsep/\n";
+# done
 exit 0;
