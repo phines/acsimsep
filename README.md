@@ -1,6 +1,6 @@
 ACSIMSEP
 ========
-an AC SIMulator) of SEParation: Simulating cascading failure in power systems
+an AC SIMulator of SEParation: Simulating cascading failure in power systems
 
 Introduction
 ------------
