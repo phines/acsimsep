@@ -1,0 +1,20 @@
+TODO issues for matrix project
+-----------------------------------------
+
+all of the types need a copy routine that inputs another element of the same type,
+but starts at row, col (or index for the vectors):
+	matrix_type::copy ( const matrix_type& A, unsigned row_begin, unsigned col_begin );
+	vector_type::copy ( const vector_type& A, unsigned index_begin );
+
+there should also be a version of clear that clears a subset of the matrix/vector
+	matrix_type::clear ( unsigned begin_row, unsigned end_row,  unsigned begin_col, unsigned end_col );
+	vector_type::clear ( unsigned begin_index, unsigned end_index );
+
+I also need to produce a whole bunch of arithmetic routines for each type
+
+there should be a solve routine from dense vector
+dense_vector<T>::solve( sparse_matrix<T>& A, dense_vector<T>& b );
+
+the production and destruction of triplet/csc/csr is not very stable.  I should probably come up with a new method.
+
+Need to produce an installation routine

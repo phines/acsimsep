@@ -1,0 +1,6 @@
+
+fred = +4.45221909
+bill = 12
+joe = 13
+jill = super_nice
+a_b = 12
