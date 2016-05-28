@@ -7,6 +7,14 @@
 //// Function definitions for the RNG class
 
 // Constructor
+
+RNG::RNG() { 
+	tms * t = new tms;
+	r_ = gsl_rng_alloc(gsl_rng_taus); 
+	gsl_rng_set(r_, times(t));
+	delete t;
+}
+/*
 RNG::RNG() {
 	r_ = gsl_rng_alloc (gsl_rng_taus);
 	gsl_rng_set (r_, times(NULL));	
@@ -15,6 +23,7 @@ RNG::RNG() {
 ~RNG() {
 	gsl_rng_free (r_);
 }
+*/
 
 // the function that returns the random number
 double RNG::rand(distribution_e dist) {
@@ -25,7 +34,7 @@ double RNG::rand(distribution_e dist) {
 		case NORMAL:
 			return gsl_ran_ugaussian(r_);
 		default:
-			return get_number(UNIFORM);
+			return rand(UNIFORM);
 	}
 }
 
@@ -40,10 +49,10 @@ double RNG::rand(distribution_e dist, double p1, double p2) {
 			// mu=p1, sigma=p2
 			return gsl_ran_gaussian(r_, p2) + p1;
 		default:
-			return get_number(UNIFORM);
+			return rand(UNIFORM);
 	}
 }
 // simple gaussian
-double randn() { 
-	return gsl_ran_gaussian(r_,1); 
+double RNG::randn() { 
+	return rand(NORMAL,1.0,0.0); 
 };

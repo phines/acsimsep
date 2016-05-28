@@ -1,3 +1,4 @@
 #! /bin/sh
+make distclean
 autoreconf --install
 ./configure

@@ -1,8 +1,6 @@
-
-#include "utilities.h"
-#include "graph.h"
-#include "options.hpp"
+#include <vector>
 #include <cstdio>
+#include "utilities.hpp"
 
 using namespace std;
 
@@ -49,15 +47,17 @@ int main(void)
 		printf("%d: ",i);
 		print_set(subgraphs[i]);
 	}
+	// initialize the random number generator
+	RNG r;
 	
 	// print some random numbers:
 	printf("\nSome Random Numbers:\n");
 	printf(" Uniform:  ");
-	for(i=0;i<10;i++) printf("%10f ", random(UNIFORM, -10, 10));
-	/*
+	for(i=0;i<10;i++) printf("%10f ", r.rand(UNIFORM, 0, 10));
+	
 	// print some gaussian random numbers:
 	printf("\n Gaussian: ");
-	for(i=0;i<10;i++) printf( "%10f ", random(GAUSS, 0, 10) );
+	for(i=0;i<10;i++) printf( "%10f ", r.rand(GAUSS, 0, 10) );
 	// play with t
 	printf("\n");
 	
@@ -69,6 +69,5 @@ int main(void)
 	printf("\nOption: \"fred\" = %g\n", fred );
 	printf("Option: \"jill\" = %s\n", options.get("jill").c_str() );
 	printf("Option: \"a_b\" = %g\n", options.get_numeric("a_b") );
-	*/
 	return 0;
 }
