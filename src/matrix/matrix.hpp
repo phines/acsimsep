@@ -1,12 +1,12 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-	#include "sparse_vector.h"
-	#include "sparse_matrix.h"
-	#include "dense_vector.h"
-	#include "dense_matrix.h"
-	#include "matrix_solve.h"
-	#include "matrix_globals.h"
+	#include "sparse_vector.hpp"
+	#include "sparse_matrix.hpp"
+	#include "dense_vector.hpp"
+	#include "dense_matrix.hpp"
+	#include "matrix_solve.hpp"
+	#include "matrix_globals.hpp"
 	#include <complex>
 	#include <vector>
 	

@@ -1,0 +1,40 @@
+This document describes the xml data format used for reading and writing data within the PowerSystem class.
+
+The data format is loosely based on/inspired by the format used by MATPOWER (see http://www.pserc.cornell.edu/matpower/).
+
+Each document should have the extention .xml, as this will communicate to the operating system clearly that the data can be read using a standard web browser.
+
+Each document should begin with an xml declaration that is something like:
+		<?xml version="1.0" encoding="ISO-8859-1"?>
+
+The following describes a simple 2 bus network using the format:
+
+-------------- begin Power System xml file -----------------------
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<PowerSystem>
+	<baseMVA> 100 </baseMVA>
+	<bus number=1> <Vmag>1.0</Vmag> <Vang>0.0</Vang> <type>REF</type> </bus>
+	<bus number=2> <Vmag>1.0</Vmag> <Vang>0.0</Vang> <type>PQ</type> </bus>
+	<gen>  <busNo>1</busNo> <P>100.0</P> <Q>10.0</Q> <Pmax>200</Pmax> <Pmin> </Pmin> <Qmax> </gen>
+	<load> <busNo>1</busNo> <S>100,10</S>  </load>
+	<branch>
+</PowerSystem>
+
+--------------- end Power System xml file ------------------------
+
+Some rules about how the data will be read.
+
+gen load, and branch types can take either real values or complex values.  All of the complex power values should be given in MW/MVAr units unless otherwise specified.
+
+Complex values should be given by a pair of values using 2 seperate tags <P> and <Q> for example, or by a single tag set with a pair of values seperated by space(s) or comma(s) such as:
+	<P>100</P> <Q>10</Q>
+or
+	<S>100, 10</S>
+or even
+	<S>100 + j10</S>
+
+as long as the code can clearly find a pair of floating point values.
+
+The following tags require complex-paired values: <S>, <Sf>, <St>, <Smax>, <Smin> <I>, <If>, <It>, <Z>, <V>
+All other value tags take only a single value

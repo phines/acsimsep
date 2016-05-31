@@ -1,8 +1,8 @@
-#include "dense_vector.h"
-#include "matrix_solve.h"
-#include "dot_product.h"
-#include "dense_matrix.h"
-#include "sparse_matrix.h"
+#include "dense_vector.hpp"
+#include "matrix_solve.hpp"
+#include "dot_product.hpp"
+#include "dense_matrix.hpp"
+#include "sparse_matrix.hpp"
 
 using namespace std;
 

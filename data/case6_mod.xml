@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE PowerSystem SYSTEM "PowerSystem.dtd">
+<?xml-stylesheet type="text/xsl" href="PowerSystem.xsl"?>
+
+<PowerSystem>
+<description></description>
+<baseMVA>100</baseMVA>
+<frequency>60</frequency>
+   <bus number="1"><type>REF</type><Vmag>1.05</Vmag><Vang>0</Vang><Vmax>1.1</Vmax><Vmin>0.9</Vmin><area>1</area><zone>1</zone><locX>0</locX><locY>0</locY><freq>60</freq></bus>
+   <bus number="2"><type>PV</type><Vmag>1.05</Vmag><Vang>-4.79156</Vang><Vmax>1.1</Vmax><Vmin>0.9</Vmin><area>1</area><zone>1</zone><locX>0</locX><locY>0</locY><freq>60</freq></bus>
+   <bus number="3"><type>PV</type><Vmag>1.07</Vmag><Vang>-5.70097</Vang><Vmax>1.1</Vmax><Vmin>0.9</Vmin><area>2</area><zone>1</zone><locX>0</locX><locY>0</locY><freq>60</freq></bus>
+   <bus number="4"><type>PQ</type><Vmag>0.979334</Vmag><Vang>-5.07171</Vang><Vmax>1.1</Vmax><Vmin>0.9</Vmin><area>1</area><zone>1</zone><locX>0</locX><locY>0</locY><freq>60</freq></bus>
+   <bus number="5"><type>PQ</type><Vmag>0.970377</Vmag><Vang>-6.35168</Vang><Vmax>1.1</Vmax><Vmin>0.9</Vmin><area>2</area><zone>1</zone><locX>0</locX><locY>0</locY><freq>60</freq></bus>
+   <bus number="6"><type>PQ</type><Vmag>0.994285</Vmag><Vang>-7.39182</Vang><Vmax>1.1</Vmax><Vmin>0.9</Vmin><area>2</area><zone>1</zone><locX>0</locX><locY>0</locY><freq>60</freq></bus>
+
+   <gen number="1"><busNo>1</busNo><S>132.126, 23.9912</S> <Smin>0, -500</Smin> <Smax>1000, 500</Smax><Pref>0</Pref> <Vref>1.05</Vref><status>1</status><mBase>100</mBase></gen>
+   <gen number="2"><busNo>2</busNo><S>50, 103.71</S> <Smin>0, -500</Smin> <Smax>1000, 500</Smax><Pref>0</Pref> <Vref>1.05</Vref><status>1</status><mBase>100</mBase></gen>
+   <gen number="3"><busNo>3</busNo><S>60, 110.339</S> <Smin>0, -500</Smin> <Smax>1000, 500</Smax><Pref>0</Pref> <Vref>1.07</Vref><status>1</status><mBase>100</mBase></gen>
+
+   <load number="1"><busNo>4</busNo><S>80,80</S> <I>0, 0</I> <Ys>0, 0</Ys> <Smax>0, 0 </Smax><status>1</status><value>1000</value></load>
+   <load number="2"><busNo>5</busNo><S>80,80</S> <I>0, 0</I> <Ys>0, 0</Ys> <Smax>0, 0 </Smax><status>1</status><value>1500</value></load>
+   <load number="3"><busNo>6</busNo><S>80,80</S> <I>0, 0</I> <Ys>0, 0</Ys> <Smax>0, 0 </Smax><status>1</status><value>2000</value></load>
+
+   <branch number="1"><from>1</from><to>2</to><R>0.1</R> <X>0.2</X> <B>0.02</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.35817, 0.171237</If> <It>-0.357293, -0.150274</It> <Sf>37.6078, -17.9799</Sf> <St>-36.0666, 18.8573</St></branch>
+   <branch number="2"><from>1</from><to>4</to><R>0.05</R> <X>0.2</X> <B>0.02</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.495062, -0.238238</If> <It>-0.494196, 0.258493</It> <Sf>51.9815, 25.015</Sf> <St>-50.4467, -20.9374</St></branch>
+   <branch number="3"><from>1</from><to>5</to><R>0.08</R> <X>0.3</X> <B>0.03</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.405109, -0.161487</If> <It>-0.403498, 0.191704</It> <Sf>42.5364, 16.9562</Sf> <St>-40.9722, -14.1566</St></branch>
+   <branch number="4"><from>2</from><to>3</to><R>0.05</R> <X>0.25</X> <B>0.03</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.0586507, 0.100671</If> <It>-0.0557407, -0.0690053</It> <Sf>5.25384, -11.0479</Sf> <St>-5.2013, 7.93952</St></branch>
+   <branch number="5"><from>2</from><to>4</to><R>0.05</R> <X>0.1</X> <B>0.01</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.274706, -0.565946</If> <It>-0.273835, 0.576055</It> <Sf>33.7071, 56.8072</Sf> <St>-31.6998, -53.8234</St></branch>
+   <branch number="6"><from>2</from><to>5</to><R>0.1</R> <X>0.3</X> <B>0.02</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.141725, -0.215622</If> <It>-0.139775, 0.235729</It> <Sf>16.7203, 21.3181</Sf> <St>-16.0108, -21.2337</St></branch>
+   <branch number="7"><from>2</from><to>6</to><R>0.07</R> <X>0.2</X> <B>0.025</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.274232, -0.192867</If> <It>-0.271537, 0.218271</It> <Sf>30.3854, 17.775</Sf> <St>-29.5662, -18.0485</St></branch>
+   <branch number="8"><from>3</from><to>5</to><R>0.12</R> <X>0.26</X> <B>0.025</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.151462, -0.30312</If> <It>-0.148792, 0.328484</It> <Sf>19.3482, 30.6635</Sf> <St>-17.8762, -30.0823</St></branch>
+   <branch number="9"><from>3</from><to>6</to><R>0.02</R> <X>0.1</X> <B>0.01</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.359816, -0.709678</If> <It>-0.358645, 0.719932</It> <Sf>45.8531, 71.7355</Sf> <St>-44.5725, -66.3991</St></branch>
+   <branch number="10"><from>4</from><to>5</to><R>0.2</R> <X>0.4</X> <B>0.04</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.0543668, 0.0181296</If> <It>-0.0504882, 0.0206688</It> <Sf>5.14652, -2.23923</Sf> <St>-5.09107, -1.45133</St></branch>
+   <branch number="11"><from>5</from><to>6</to><R>0.1</R> <X>0.3</X> <B>0.03</B><rateA>70</rateA> <rateB>85</rateB> <rateC>105</rateC><tap>0</tap> <shift>0</shift> <status>1</status><name> </name><If>0.0417039, 0.0998363</If> <It>-0.0381748, -0.0705797</It> <Sf>2.95023, -10.0761</Sf> <St>-2.86128, 7.44764</St></branch>
+
+   <event><time>  0</time><type>start            </type></event>
+   <event><time>  0</time><type>change_step_size </type><amount>0.5</amount></event>
+   <event><time>5.0</time><type>remove_branch    </type><location>1</location></event>
+   <event><time>5.0</time><type>remove_branch    </type><location>5</location></event>
+   <event><time>30 </time><type>finish           </type></event>
+</PowerSystem>

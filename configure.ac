@@ -49,11 +49,13 @@ AM_PROG_AR
 
 # What files should we make
 AC_CONFIG_FILES([
- Makefile
- src/Makefile
- src/regex/Makefile
- src/utilities/Makefile
- src/matrix/Makefile
+	Makefile
+	src/Makefile
+	src/regex/Makefile
+	src/utilities/Makefile
+	src/matrix/Makefile
+	src/myxml/Makefile
+	src/PowerSystem/Makefile
 ])
 
 # Now do it

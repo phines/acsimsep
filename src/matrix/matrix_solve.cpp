@@ -1,13 +1,11 @@
-using namespace std;
-
-#include "matrix_solve.h"
+#include "matrix_solve.hpp"
 #include <umfpack.h>
 #include <assert.h>
 #include <stdio.h>
 //#include <slu_ddefs.h>
-#include "sparse_matrix.h"
-#include "dense_vector.h"
-#include "dense_matrix.h"
+#include "sparse_matrix.hpp"
+#include "dense_vector.hpp"
+#include "dense_matrix.hpp"
 
 typedef std::complex<double> cx;
 
@@ -23,7 +21,8 @@ int get_umfpack_strategy(solve_strategy_e strategy)
 		case SYMMETRIC:
 			return UMFPACK_STRATEGY_SYMMETRIC;
 		case PERMUTATION:
-			return UMFPACK_STRATEGY_2BY2;
+			return UMFPACK_STRATEGY_AUTO;
+//			return UMFPACK_STRATEGY_2BY2;
 	}
 	return UMFPACK_STRATEGY_AUTO;
 }
@@ -66,7 +65,7 @@ bool solve_umfpack( sparse_matrix_t< double > &A,
 	}
 	if ( status == UMFPACK_OK ) success = true;
 	else {
-		printf("\nWarning: UMFPACK could not solve linear system\n");
+		printf("Warning: UMFPACK could not solve linear system\n");
 		//Control[UMFPACK_PRL] = 5; // set the print level to high
 		//umfpack_di_report_matrix (m, n, Ap, Ai, Ax, 1, Control);
 		//umfpack_di_report_info( Control, Info );
@@ -134,9 +133,11 @@ bool solve_umfpack ( sparse_matrix_t< double > &A,
 	status = umfpack_di_symbolic (m, n, Ap, Ai, Ax, &Symbolic, Control, Info);
 	if ( status == UMFPACK_OK )
 	{
+		//A.set_symbolic(Symbolic);
 		status = umfpack_di_numeric (Ap, Ai, Ax, Symbolic, &Numeric, Control, Info);
 		if ( status == UMFPACK_OK )
 		{
+			//A.set_numeric(Numeric);
 			// for each system of equations, solve for the result
 			for (col=0; col<equation_sets; col++)
 			{
@@ -248,10 +249,10 @@ template bool sparse_solve ( sparse_matrix_t<  cx  >&, dense_vector_t <  cx  >&,
 
 ///  sparse_solve
 ///   solve a set of linear equation systems:
-///   A * X = B
-///    A must be square
-///    B must have as many rows as A
-///    X will have as many columns as B
+///   A * x = b
+///    A must be square: n x n
+///    x is the output: n x 1
+///    b is the right hand side: also n x 1
 template <typename T>
 bool sparse_solve ( sparse_matrix_t< T > &A,
                      dense_matrix_t< T > &X,

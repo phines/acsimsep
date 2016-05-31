@@ -1,4 +1,4 @@
-#include "regex.h"
+#include "regex.hpp"
 #include <stdio.h>
 #include <assert.h>
 #include <pcre.h>

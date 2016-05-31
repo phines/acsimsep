@@ -56,3 +56,19 @@ double RNG::rand(distribution_e dist, double p1, double p2) {
 double RNG::randn() { 
 	return rand(NORMAL,1.0,0.0); 
 };
+// two parameter random gaussian
+double RNG::randn(double mu, double sigma) {
+	return rand(NORMAL,mu,sigma); 
+}
+// two parameter random uniform
+double RNG::randu(double p1, double p2) {
+	return gsl_rng_uniform(r_)*(p2-p1) + p1;
+}
+// two parameter random integer
+int RNG::randi(int lower,int upper) {
+	int i = (int) ( ( gsl_rng_uniform(r_) * (double)(upper-lower) ) + lower );
+	//printf("i = %d\n",i);
+	return i;
+}
+
+

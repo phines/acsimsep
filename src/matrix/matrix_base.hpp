@@ -8,7 +8,7 @@ extern "C"
 	#include <stdio.h>
 	#include <time.h>
 }
-#include "matrixable.h"
+#include "matrixable.hpp"
 
 /// class matrix_base_t
 ///  A base class for all matrix routines.

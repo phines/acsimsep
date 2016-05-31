@@ -8,7 +8,7 @@ extern "C"
 	#include <stdio.h>
 	#include <time.h>
 }
-#include "../utilities/utilities.h"
+#include "../utilities/utilities.hpp"
 #include <complex>
 #include <stdexcept>
 #include <string>
@@ -31,7 +31,7 @@ class Matrixable
 {
 	public:
 		/// constrctor
-		Matrixable() { srandom( time(NULL) ); }
+		Matrixable() { /*srandom( time(NULL) );*/ }
 		/// error - prints an error message and exits the program
 		/// @param msg - the message to be printed
 		inline void error(const char * msg) const { throw std::runtime_error(msg); }
@@ -48,7 +48,7 @@ class Matrixable
 		template <typename U>
 		inline U max (U a, U b) { return ( a>b ? a : b ); }
 		/// rand - returns a random number with the specified distribution
-		inline double rand( distribution_e dist=UNIFORM ) const { return random(dist); }
+		inline double rand( distribution_e dist=UNIFORM ) { return r_.rand(dist); }
 		/// print_value - prints a double value to stdout
 		void print_value( const double &value ) const { printf(" %15.10g ", value); }
 		/// print_value - prints a complex double value to stdout
@@ -59,6 +59,7 @@ class Matrixable
 		inline bool nearly_zero( double value )               { return ( fabs(value) < MATRIX_EPS ); };
 		inline bool nearly_zero( std::complex<double> value ) { return (  abs(value) < MATRIX_EPS ); };
 	protected:
+		RNG r_;
 };
 
 #endif

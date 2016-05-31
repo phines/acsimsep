@@ -4442,7 +4442,7 @@ esac
 
 
 # What files should we make
-ac_config_files="$ac_config_files Makefile src/Makefile src/regex/Makefile src/utilities/Makefile src/matrix/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile src/regex/Makefile src/utilities/Makefile src/matrix/Makefile src/myxml/Makefile src/PowerSystem/Makefile"
 
 
 # Now do it
@@ -5182,6 +5182,8 @@ do
     "src/regex/Makefile") CONFIG_FILES="$CONFIG_FILES src/regex/Makefile" ;;
     "src/utilities/Makefile") CONFIG_FILES="$CONFIG_FILES src/utilities/Makefile" ;;
     "src/matrix/Makefile") CONFIG_FILES="$CONFIG_FILES src/matrix/Makefile" ;;
+    "src/myxml/Makefile") CONFIG_FILES="$CONFIG_FILES src/myxml/Makefile" ;;
+    "src/PowerSystem/Makefile") CONFIG_FILES="$CONFIG_FILES src/PowerSystem/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

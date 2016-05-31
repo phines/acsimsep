@@ -16,6 +16,10 @@ int main(void)
 	set<int> A;
 	set<int> B;
 	
+	printf("------------------------------------------\n");
+	printf("Testing the Graph class\n");
+	printf("------------------------------------------\n");
+	
 	// initialize and print the graph
 	Graph G(from,to);
 	G.print("G");
@@ -47,21 +51,34 @@ int main(void)
 		printf("%d: ",i);
 		print_set(subgraphs[i]);
 	}
+	/// RNG
+	printf("------------------------------------------\n");
+	printf("Testing the random number generator class \n");
+	printf("------------------------------------------\n");
 	// initialize the random number generator
 	RNG r;
 	
 	// print some random numbers:
-	printf("\nSome Random Numbers:\n");
+	printf("Some Random Numbers:\n");
 	printf(" Uniform:  ");
-	for(i=0;i<10;i++) printf("%10f ", r.rand(UNIFORM, 0, 10));
-	
-	// print some gaussian random numbers:
-	printf("\n Gaussian: ");
-	for(i=0;i<10;i++) printf( "%10f ", r.rand(GAUSS, 0, 10) );
-	// play with t
+	for(i=0;i<10;i++) printf("%10f ", r.rand(UNIFORM) );
 	printf("\n");
 	
+	// print some gaussian random numbers:
+	printf(" Gaussian: ");
+	for(i=0;i<10;i++) printf( "%10f ", r.rand(GAUSS) );
+	printf("\n");
+	
+	printf(" Integer:  ");
+	for(i=0;i<10;i++) printf("%10d ", r.randi(0, 100));
+	printf("\n");
+	printf("\n");
+	
+	
 	// check the options file stuff
+	printf("------------------------------------------\n");
+	printf("Testing the options file reader \n");
+	printf("------------------------------------------\n");
 	options_t options;
 	options.read_file( "options.txt" );
 	double fred = options.get_numeric("fred");

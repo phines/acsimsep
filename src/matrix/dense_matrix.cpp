@@ -1,6 +1,6 @@
-#include "dense_matrix.h"
-#include "sparse_matrix.h"
-#include "matrix_solve.h"
+#include "dense_matrix.hpp"
+#include "sparse_matrix.hpp"
+#include "matrix_solve.hpp"
 
 typedef std::complex<double> cx;
 

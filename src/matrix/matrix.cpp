@@ -1,5 +1,5 @@
 // nothing to do here...
-#include "matrix.h"
+#include "matrix.hpp"
 #include <ctime>
 #include <sys/time.h>
 #include <cstdlib>

@@ -1,8 +1,9 @@
 #ifndef SPARSE_MATRIX_H
 #define SPARSE_MATRIX_H
 
-#include "matrix_base.h"
-#include "sparse_vector.h"
+#include "matrix_base.hpp"
+#include "sparse_vector.hpp"
+#include "dense_vector.hpp"
 #include <set>
 #include <vector>
 #include <complex>
@@ -16,11 +17,19 @@ class sparse_matrix_t : public matrix_base_t
 {
 	public:
 		/// constructor 0
-		sparse_matrix_t() : nnz_(0), strategy_(AUTO), data_size_(0) 
+		sparse_matrix_t() : nnz_(0), strategy_(AUTO), data_size_(0), Numeric_(NULL), Symbolic_(NULL)
 			{ resize(0,0); iter_=data_.begin(); };
 		/// constructor 1
 		sparse_matrix_t( unsigned n_rows, unsigned n_cols ) : nnz_(0), strategy_(AUTO), data_size_(0)
 			{ resize( n_rows, n_cols); };
+		/// destructor
+		~sparse_matrix_t() {
+			// free the UMFPACK data
+			//if (Numeric!=NULL)  umfpack_di_free_numeric(&Numeric);
+			//if (Symbolic!=NULL) umfpack_di_free_symbolic(&Symbolic);
+		}
+		/// solve
+		bool solve(dense_vector_t < T > &b, dense_vector_t < T > &x );
 		/// nnz - returns the number of non-zeros
 		inline unsigned nnz()              const { return nnz_; };
 		/// strategy - returns the recommended solver strategy for this matrix
@@ -71,15 +80,15 @@ class sparse_matrix_t : public matrix_base_t
 		/// zeros - fils the matrix with zeros (empties out all of the internal vectors
 		inline void zeros() { if (nnz_>0) { for (unsigned i=0; i<data_size_; i++ ) data_[i].zeros(); nnz_=0; } }
 		/// fill_rand - fill the matrix with random elements
-		inline void fill_rand( double portion ) {
-			unsigned row, col, n, i;
+		inline void fill_rand( double density ) {
+			unsigned row, col, n_nz, i;
 			T value;
 			zeros();
-			n = unsigned( portion*size() );
-			for( i=0; i<n; i++ ) {
+			n_nz = unsigned( density*size() );
+			for( i=0; i<n_nz; i++ ) {
 				value = T( rand( UNIFORM ) );
-				row = random()%rows_;
-				col = random()%cols_;
+				row = r_.randi(0,rows_);
+				col = r_.randi(0,cols_);
 				set(row,col,value);
 			}
 		}
@@ -144,6 +153,13 @@ class sparse_matrix_t : public matrix_base_t
 		inline void eye() { eye(1.0); }
 		/// subset makes this matrix into a subset of the @param larger matrix given the row and col sets
 		void subset( sparse_matrix_t<T> & larger, std::set<int> & row_set, std::set<int> & col_set );
+		/// Set the Numeric solver data
+		void set_numeric(void * Num_in) { Numeric_=Num_in; }
+		/// Set the Symbolic solver data
+		void set_symbolic(void * Sym_in) {  Symbolic_=Sym_in; }
+		/// Get the symbolic/numeric data
+		void * get_symbolic() { return  Symbolic_; }
+		void * get_numeric() { return  Numeric_; }
 	private:
 		//// member data:
 		unsigned nnz_;  ///< the number of non-zero elements
@@ -155,6 +171,8 @@ class sparse_matrix_t : public matrix_base_t
 		std::vector<int> row_index_; ///< used for triplet form of the matrix
 		std::vector<int> col_index_; ///< used for triplet and csc/csv form of the matrix
 		std::vector<T> values_;    ///< used for triplet and csc/csr form of the matrix
+		void * Symbolic_; ///< used to store the symbolic solve data used by the solver.
+		void * Numeric_; ///< used to store the numeric solve data
 };
 
 template class sparse_matrix_t< double >;

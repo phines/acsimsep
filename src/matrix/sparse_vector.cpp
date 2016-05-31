@@ -1,4 +1,4 @@
-#include "sparse_vector.h"
+#include "sparse_vector.hpp"
 
 #include <algorithm>
 

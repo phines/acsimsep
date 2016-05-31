@@ -2,8 +2,8 @@
 #define DOT_PRODUCT_H
 
 #include <complex>
-#include "sparse_vector.h"
-#include "dense_vector.h"
+#include "sparse_vector.hpp"
+#include "dense_vector.hpp"
 
 template< typename T >
 T dot_product( dense_vector_t<T> &a, dense_vector_t<T> &b )

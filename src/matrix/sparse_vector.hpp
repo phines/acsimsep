@@ -1,7 +1,7 @@
 #ifndef SPARSE_VECTOR_H
 #define SPARSE_VECTOR_H
 
-#include "vector_base.h"
+#include "vector_base.hpp"
 #include <map>
 #include <algorithm>
 #include <stdlib.h>

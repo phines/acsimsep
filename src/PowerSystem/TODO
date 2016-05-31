@@ -1,0 +1,32 @@
+Stuff to be fixed in the power project:
+
+** MPC algorithm **
+Need to fix for the new method of calculating the control horizon (K), so that the algorithm functions
+better in a distributed environment.
+
+I am not sure if the variables in the load structure are being treated correctly (Pd / Pmax, Qd / Qmax, etc)
+
+** XML data reading ** *** DONE -- mostly ***
+
+each data type, and the PowerSystem class, needs the following pair of functions:
+
+	read  ( data_string, format );
+	write ( data_string, format );
+
+where format includes an XML option. This will allow data exchange to occur more reliably.
+
+format should include the following options:
+	XML -- simple XML format for power system data
+	MATPOWER -- series of data in MP order
+	IEEE_CDF -- IEEE common data format
+	PSSE -- PSS/E format (perhaps some day)
+
+The PowerSystem class should have functions that read and write to/from files:
+
+	read_file  ( filename, format );
+	write_file ( filename, format );
+	
+These would merely call the string versions above, and read/write the strings from/to filename
+
+*** add additioanl status variable to branch ***
+branch should have a variable for both the from end status, and the to end status, which should be separate

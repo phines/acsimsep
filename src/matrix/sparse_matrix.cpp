@@ -1,4 +1,4 @@
-#include "sparse_matrix.h"
+#include "sparse_matrix.hpp"
 #include <algorithm>
 #define SPARSE_MATRIX_EMPTY 99999999
 
@@ -208,5 +208,28 @@ void sparse_matrix_t<T>::subset( sparse_matrix_t<T> & larger, std::set<int> & ro
 }
 template void sparse_matrix_t<double>::subset( sparse_matrix_t<double> & larger, std::set<int> & row_set, std::set<int> & col_set );
 template void sparse_matrix_t<  cx  >::subset( sparse_matrix_t<  cx  > & larger, std::set<int> & row_set, std::set<int> & col_set );
+
+
+template <>
+bool sparse_matrix_t<double>::solve(dense_vector_t <double> &b, dense_vector_t <double> &x )
+{
+	bool success=false;
+
+	// First make a csc
+	printf("sparse_matrix_t<double>::solve is not working yet\n");
+
+	return success;
+}
+
+template <typename cx>
+bool sparse_matrix_t<cx>::solve(dense_vector_t <cx> &b, dense_vector_t <cx> &x )
+{
+	bool success=false;
+
+	// First make a csc
+	printf("sparse_matrix_t<cx>::solve is not working yet\n");
+
+	return success;
+}
 
 

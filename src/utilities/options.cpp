@@ -1,5 +1,5 @@
 #include "options.hpp"
-#include "../regex/regex.h"
+#include "../regex/regex.hpp"
 #include <iostream>
 #include <fstream>
 

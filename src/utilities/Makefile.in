@@ -111,10 +111,10 @@ am_libutilities_a_OBJECTS = RNG.$(OBJEXT) graph.$(OBJEXT) \
 libutilities_a_OBJECTS = $(am_libutilities_a_OBJECTS)
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_test_utilities_OBJECTS = test.$(OBJEXT)
+am_test_utilities_OBJECTS = test_utilities.$(OBJEXT)
 test_utilities_OBJECTS = $(am_test_utilities_OBJECTS)
 test_utilities_LDADD = $(LDADD)
-test_utilities_DEPENDENCIES = libutilities.a
+test_utilities_DEPENDENCIES = libutilities.a ../regex/libregex.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -263,10 +263,14 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-test_utilities_SOURCES = test.cpp
-LDADD = libutilities.a -L../regex -lregex
+
+# we want to build a library
 noinst_LIBRARIES = libutilities.a
+# from these sources
 libutilities_a_SOURCES = RNG.cpp graph.cpp options.cpp utilities.cpp 
+# which will need these libraries
+LDADD = libutilities.a ../regex/libregex.a
+test_utilities_SOURCES = test_utilities.cpp
 all: all-am
 
 .SUFFIXES:
@@ -364,7 +368,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RNG.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/graph.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/options.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_utilities.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utilities.Po@am__quote@
 
 .cpp.o:

@@ -1,7 +1,7 @@
 #ifndef SOLVE_H
 #define SOLVE_H
 
-#include "matrix_globals.h"
+#include "matrix_globals.hpp"
 #include <complex>
 
 // pre-declare the matrix types that we will use:

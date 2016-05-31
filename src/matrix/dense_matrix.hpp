@@ -3,8 +3,8 @@
 
 #include <complex>
 #include <vector>
-#include "matrix_base.h"
-#include "dense_vector.h"
+#include "matrix_base.hpp"
+#include "dense_vector.hpp"
 
 template < typename T >
 class sparse_matrix_t;

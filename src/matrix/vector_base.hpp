@@ -1,7 +1,7 @@
 #ifndef VECTOR_BASE_H
 #define VECTOR_BASE_H
 
-#include "matrixable.h"
+#include "matrixable.hpp"
 
 /// class vector_base_t
 ///  Overloads the matrix_base_t class specifically for vectors
