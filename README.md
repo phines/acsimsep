@@ -10,7 +10,6 @@ Installation
 ------------
 To install ACSIMSEP follow the following proceedure:
 * First make a local copy of the repository using something like ```git@github.com:phines/acsimsep.git```
-* Navigate to the ```ThirdPaty/SuiteSparse``` directory.
 * Install the key Third Party codes:
 * Install SuiteSparse by navigating to the ```acsimsep/ThirdParty/SuiteSparse``` directory and then: ```make``` and then ```make install```.
 * Install Coin-Bonmin and its friends: ```cd ../Coin-Bonmin/``` and then ```./configure``` and then ```make``` and then ```make install```.
