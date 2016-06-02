@@ -21,7 +21,7 @@ class Sim_Solver
 	public:
 		//// methods:
 		/// constructor
-		Sim_Solver() { t_=-1; k_=-1; dt_=DEFAULT_STEP_SIZE; t_finish_=0; nextEvent_=NULL; PS_=NULL; log_=NULL; };
+		Sim_Solver() { t_0_=0; t_=-1; k_=-1; dt_=DEFAULT_STEP_SIZE; t_finish_=0; nextEvent_=NULL; PS_=NULL; log_=NULL; };
 		/// destructor
 		~Sim_Solver() { if (log_!=NULL) fclose(log_); }
 		/// init - initializes the simulation

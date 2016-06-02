@@ -39,6 +39,9 @@ int main( int argc, char* argv[] )
 		printf("Could not open file %s\n",filename);
 	}	
 	printf("\n");
+	// try the acsimsep solver
+	Sim_Solver acsimsep;
+	acsimsep.run(&ps);
 	// exit
 	return 0;
 }
