@@ -12,12 +12,12 @@ LDFLAGS="$LDFLAGS \
 	-L/usr/local/lib \
 	-L$PWD/ThirdParty/Coin-Bonmin/lib \
 	-L$PWD/ThirdParty/SuiteSparse/lib \
-	-L/usr/local/opt/libxml2/lib"
+	`xml2-config --libs`"
 CPPFLAGS="$CPPFLAGS \
 	-I/usr/local/include \ 
 	-I$PWD/ThirdParty/Coin-Bonmin/include \ 
 	-I$PWD/ThirdParty/SuiteSparse/include \
-	-I/usr/local/opt/libxml2/include/libxml2"
+	`xml2-config --cflags`"
 
 # Initialize Automake
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
@@ -57,6 +57,9 @@ AC_CONFIG_FILES([
 	src/myxml/Makefile
 	src/PowerSystem/Makefile
 ])
+
+# Configure the Bonmin stuff
+## AC_CONFIG_SUBDIRS([ThirdParty/Coin-Bonmin])
 
 # Now do it
 AC_OUTPUT
