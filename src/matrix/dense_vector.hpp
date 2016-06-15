@@ -4,6 +4,7 @@
 #include <complex>
 #include <vector>
 #include "vector_base.hpp"
+#include <cstring>
 //#include "dense_matrix.h"
 //#include "sparse_matrix.h"
 

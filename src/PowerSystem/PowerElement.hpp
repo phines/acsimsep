@@ -7,6 +7,7 @@
 #include <cstring>
 #include <cassert>
 #include <cmath>
+#include <cstdio>
 
 #include "PowerGlobals.hpp"
 #include "../regex/regex.hpp"

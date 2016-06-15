@@ -1,4 +1,5 @@
 #include "PowerElement.hpp"
+#include <cstdlib>
 
 int power_element_t::nextNo=1;
 

@@ -2,6 +2,7 @@
 #include "../regex/regex.hpp"
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 
 using namespace std;
 

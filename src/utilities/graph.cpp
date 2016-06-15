@@ -1,6 +1,7 @@
 #include "graph.hpp"
 #include <algorithm>
 #include <cassert>
+#include <cstdio>
 
 using namespace std;
 
