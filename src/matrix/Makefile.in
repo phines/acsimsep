@@ -266,7 +266,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 test_matrix_SOURCES = test_matrix.cpp
-LDADD = libmatrix.a -L../utilities -lutilities -L../../ThirdParty/SuiteSparse/lib/ -lumfpack
+#LDADD = libmatrix.a -L../utilities -lutilities -L../../ThirdParty/SuiteSparse/lib/ -lumfpack
+LDADD = libmatrix.a -L../utilities -lutilities
 noinst_LIBRARIES = libmatrix.a
 libmatrix_a_SOURCES = dense_matrix.cpp dense_vector.cpp matrix.cpp matrix_base.cpp matrix_solve.cpp matrixable.cpp sparse_matrix.cpp sparse_vector.cpp vector_base.cpp
 all: all-am

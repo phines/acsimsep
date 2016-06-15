@@ -11,7 +11,7 @@ PWD=`pwd`
 LDFLAGS="$LDFLAGS \
 	-L/usr/local/lib \
 	-L$PWD/ThirdParty/Coin-Bonmin/lib \
-	-L$PWD/ThirdParty/SuiteSparse/lib \
+	-L$PWD/ThirdParty/SuiteSparse/lib -lumfpack \
 	`xml2-config --libs`"
 CPPFLAGS="$CPPFLAGS \
 	-I/usr/local/include \ 

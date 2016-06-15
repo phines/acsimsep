@@ -14,7 +14,7 @@ class RNG
 		// constructor
 		RNG();
 		// destructor
-		~RNG() { gsl_rng_free (r_); r_=NULL; }
+		~RNG();
 		// return a random number from distribution d
 		double rand(distribution_e d=UNIFORM);
 		// return a random number from distribution d with two parameters

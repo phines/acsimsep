@@ -14,14 +14,17 @@ RNG::RNG() {
 	gsl_rng_set(r_, times(t));
 	delete t;
 }
+// Destructor
+RNG::~RNG() {
+	if (r_!=NULL) {
+		gsl_rng_free(r_);
+	}
+	r_=NULL;
+}
 /*
 RNG::RNG() {
 	r_ = gsl_rng_alloc (gsl_rng_taus);
 	gsl_rng_set (r_, times(NULL));	
-}
-// Destructor
-~RNG() {
-	gsl_rng_free (r_);
 }
 */
 

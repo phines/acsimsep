@@ -1893,13 +1893,13 @@ PWD=`pwd`
 LDFLAGS="$LDFLAGS \
 	-L/usr/local/lib \
 	-L$PWD/ThirdParty/Coin-Bonmin/lib \
-	-L$PWD/ThirdParty/SuiteSparse/lib \
-	-L/usr/local/opt/libxml2/lib"
+	-L$PWD/ThirdParty/SuiteSparse/lib -lumfpack \
+	`xml2-config --libs`"
 CPPFLAGS="$CPPFLAGS \
 	-I/usr/local/include \
 	-I$PWD/ThirdParty/Coin-Bonmin/include \
 	-I$PWD/ThirdParty/SuiteSparse/include \
-	-I/usr/local/opt/libxml2/include/libxml2"
+	`xml2-config --cflags`"
 
 # Initialize Automake
 am__api_version='1.15'
@@ -4444,6 +4444,9 @@ esac
 # What files should we make
 ac_config_files="$ac_config_files Makefile src/Makefile src/regex/Makefile src/utilities/Makefile src/matrix/Makefile src/myxml/Makefile src/PowerSystem/Makefile"
 
+
+# Configure the Bonmin stuff
+## AC_CONFIG_SUBDIRS([ThirdParty/Coin-Bonmin])
 
 # Now do it
 cat >confcache <<\_ACEOF
