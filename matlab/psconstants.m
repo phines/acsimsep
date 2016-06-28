@@ -49,17 +49,21 @@ if isempty(C)
     C.bu.mu_Vmin    = 17; % sensitivity to changes in limits
 	C.bu.locX       = 18; % location of the bus in the x dimension
 	C.bu.locY       = 19; % location of the bus in the y dimension
-    C.bu.delta_sys  = 20; % stores system angle when first bus of island
-    C.bu.Vr         = 21; % real portion of complex voltage
-    C.bu.Vi         = 22; % imaginary portion of complex voltage
-    
+    C.bu.comm_status = 20; % this is a binary value indicating if the comm system is working at this node
+    C.bu.status = 21; % this is a binary value indicating if bus has station service power
+    C.bu.power_from_sh = 22; % indicates which shunt this bus gets its station service power from
+    C.bu.grid_comm = 23; % Binary indcator that tells us whether there exists a bi-directional grid-comm link
     % synonyms
     C.bu.locs   = [C.bu.locX C.bu.locY];
     
     % column names
-    C.bu.col_names = {'ID','type','Pd','Qd','Gs','Bs','area','Vmag','Vang','basekV','zone','Vmax','Vmin','lam_P','lam_Q','mu_Vx','mu_Vn','locX','locY','delta_sys'};
-
-	C.bu.cols = 22; % minimum number of columns
+    C.bu.col_names = {'ID','type','Pd','Qd','Gs','Bs','area','Vmag','Vang','basekV','zone','Vmax','Vmin',...
+        'lam_P','lam_Q','mu_Vx','mu_Vn','locX','locY','comm_status','bus_status','power_from_sh','grid_comm'};
+    
+    % synonyms
+    C.bu.locs   = [C.bu.locX C.bu.locY];
+    
+	C.bu.cols = 23; % minimum number of columns
 	C.bus = C.bu; % allows us to use C.bus or C.bu
     % default kv
     C.bu.baseKV_default = 230;
@@ -85,11 +89,11 @@ if isempty(C)
 	C.br.Imag_f = 18; % rms current (p.u.) on the from end of the branch
 	C.br.Imag_t = 19; % rms current (p.u.) on the to end of the branch
 	C.br.switchable = 20; % used to indicate that the branch is switchable
-    C.br.prob_fail = 21;  % prob of one or more faults within this branch during a one hour period
+    C.br.fail_rate = 21;  % failure rate of the branch (lambda)
     C.br.type   = 22; % branch type
     C.br.id     = 23; % branch id
-    C.br.col_names = {'from','to','R','X','B','rateA','rateB','rateC','tap','shift','status'...
-        'Pf','Qf','Pt','Qt','mu_f','mu_t','Imag_f','Imag_t','switchable','prob_fail','type','id'};
+    C.br.col_names = {'from','to','R','X','B','rateA','rateB','rateC','tap','shift','status',...
+        'Pf','Qf','Pt','Qt','mu_f','mu_t','Imag_f','Imag_t','switchable','fail_rate','type','id'};
 
 	C.br.cols = 23;   % min no. of cols for branch
 

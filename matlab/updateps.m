@@ -3,12 +3,23 @@ function ps = updateps(ps)
 % see "psconstants" for a description of this structure
 
 C = psconstants;
+EPS = 1e-4;
 
 %% make sure that the matrices are big enough
 % bus
 [n,bu_cols] = size(ps.bus);
 if bu_cols < C.bu.cols
     ps.bus = addcolumns(ps.bus,C.bu.cols);
+    % initialize bus status variables to one if they did not previously exist
+    if bu_cols < C.bu.comm_status
+        ps.bus(:,C.bu.comm_status) = 1;
+    end
+	if bu_cols < C.bu.status
+		ps.bus(:,C.bu.status) = 1;
+	end
+	if bu_cols < C.bu.grid_comm
+        ps.bus(:,C.bu.grid_comm) = 1;
+	end
 end
 % branch
 if size(ps.branch,2) < C.br.cols
@@ -76,7 +87,7 @@ ps.branch(tap==0,C.br.tap) = 1;
 % check shunt status
 if isfield(ps,'shunt') && ~isempty(ps.shunt)
     status = ps.shunt(:,C.sh.status);
-    if any( status<0 | status>1 )
+    if any( status<-EPS | status>1+EPS )
         error('strange status/factor value found in shunt matrix');
     end
 end
