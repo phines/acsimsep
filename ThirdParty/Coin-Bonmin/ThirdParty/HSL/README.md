@@ -1,0 +1,1 @@
+In order to use Bonmin, you will need the HSL files here. Please see the INTSALL.HSL file for details.
