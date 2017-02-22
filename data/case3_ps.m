@@ -1,4 +1,4 @@
-function ps = case2_ps
+function ps = case3_ps
 
 ps.baseMVA = 100.000000;
 
@@ -6,11 +6,14 @@ ps.bus = [...
 %ID type Pd Qd Gs Bs area Vmag Vang basekV Vmax Vmin lam P lam Q mu Vx mu Vn locX locY 
  1 3 0 0 0 0 1 1 0 230 1 1 1.05 0 0 0 0 1.5 1;
  2 1 0 0 0 0 1 1 0 230 1 1 1.05 0 0 0 0 2 1;
+ 3 1 0 0 0 0 1 1 0 230 1 1 1.05 0 0 0 0 2 1;
 ];
 
 ps.branch = [...
 %from to R X B rateA rateB rateC tap shift status 
- 1 2 0 0.1 0 1000 1000 1000 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0;
+ 1 2 0.01 0.1 0 1000 1000 1000 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0;
+ 2 3 0.01 0.1 0 1000 1000 1000 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0;
+ 1 3 0.01 0.1 0 1000 1000 1000 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0;
 ];
 
 ps.gen = [...
@@ -21,6 +24,7 @@ ps.gen = [...
 ps.shunt = [...
 %bus P Q frac_S frac_Z status type value 
  2 200 100 1 0 1 1 100000 0;
+ 3 200 100 1 0 1 1 100000 0;
 ];
 
 ps.areas = [...

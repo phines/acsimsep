@@ -92,10 +92,11 @@ if isempty(C)
     C.br.fail_rate = 21;  % failure rate of the branch (lambda)
     C.br.type   = 22; % branch type
     C.br.id     = 23; % branch id
+    C.br.contg_st = 24; % 1 if the branch outage is of interest in contingency analysis, and 0 otherwise
     C.br.col_names = {'from','to','R','X','B','rateA','rateB','rateC','tap','shift','status',...
         'Pf','Qf','Pt','Qt','mu_f','mu_t','Imag_f','Imag_t','switchable','fail_rate','type','id'};
 
-	C.br.cols = 23;   % min no. of cols for branch
+	C.br.cols = 24;   % min no. of cols for branch
 
 	% short cuts:
 	C.br.f = C.br.from;

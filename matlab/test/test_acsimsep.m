@@ -1,3 +1,8 @@
+%% add the two acsimsep paths
+addpath ../../data
+addpath ../
+
+%%
 fprintf('\n\n');
 clear variables;
 opt = psoptions;
